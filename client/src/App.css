@@ -5,13 +5,14 @@
   flex-direction: column;
   align-items: center;
   padding: 40px 20px;
-  font-family: "Arial", sans-serif;
+  font-family: Arial, sans-serif; /* quotes not needed */
 }
 
 .title {
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 20px;
+  color: #333; /* better contrast */
 }
 
 /* Input Section */
@@ -27,15 +28,22 @@
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 16px;
+  outline: none; /* removes default blue outline */
+}
+
+.todo-input:focus {
+  border-color: #007bff; /* highlight on focus */
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
 }
 
 .add-btn {
   padding: 12px 18px;
   background: #007bff;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .add-btn:hover {
@@ -47,11 +55,11 @@
   list-style: none;
   padding: 0;
   width: 320px;
-  color: black;
+  margin: 0; /* reset default margin */
 }
 
 .todo-item {
-  color: black;   /* 🔥 Fix added */
+  color: #000;
   padding: 14px;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -59,16 +67,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #fff; /* ensures contrast with page background */
 }
-
 
 .delete-btn {
   background: #ff4d4d;
-  color: white;
+  color: #fff;
   border: none;
   padding: 6px 10px;
   border-radius: 6px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .delete-btn:hover {
