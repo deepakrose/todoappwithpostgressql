@@ -47,11 +47,12 @@
   list-style: none;
   padding: 0;
   width: 320px;
+  color: black;
 }
 
 .todo-item {
-  background: black;
-  color: white;   /* 🔥 Fix added */
+  background: white;
+  color: black;   /* 🔥 Fix added */
   padding: 14px;
   margin-bottom: 10px;
   border-radius: 8px;
