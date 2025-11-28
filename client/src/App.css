@@ -51,6 +51,7 @@
 
 .todo-item {
   background: black;
+  color: white;   /* 🔥 Fix added */
   padding: 14px;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -59,6 +60,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 
 .delete-btn {
   background: #ff4d4d;
