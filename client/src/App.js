@@ -1,44 +1,74 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-
-const API = "https://todoappwithpostgressql.onrender.com";
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
   const [todos, setTodos] = useState([]);
-  const [text, setText] = useState("");
+  const [task, setTask] = useState("");
 
-  const loadTodos = async () => {
-    const res = await axios.get(`${API}/todos`);
-    setTodos(res.data);
-  };
-
-  const addTodo = async () => {
-    await axios.post(`${API}/todos`, { text });
-    setText("");
-    loadTodos();
-  };
-
-  const deleteTodo = async (id) => {
-    await axios.delete(`${API}/todos/${id}`);
-    loadTodos();
-  };
-
+  // 🔹 Fetch todos from backend (Express + Postgres)
   useEffect(() => {
-    loadTodos();
+    fetch("https://todoappwithpostgressql.onrender.com/todos")
+      .then((res) => res.json())
+      .then((data) => setTodos(data))
+      .catch((err) => console.error(err));
   }, []);
 
-  return (
-    <div style={{ padding: 20 }}>
-      <h1>Todo App</h1>
-      <input value={text} onChange={(e) => setText(e.target.value)} />
-      <button onClick={addTodo}>Add</button>
+  // 🔹 Add new todo
+  const addTodo = async () => {
+    if (task.trim() === "") return;
 
-      {todos.map((t) => (
-        <div key={t.id}>
-          {t.text}
-          <button onClick={() => deleteTodo(t.id)}>X</button>
-        </div>
-      ))}
+    const newTodo = { title: task };
+
+    const res = await fetch("https://todoappwithpostgressql.onrender.com/todos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newTodo),
+    });
+
+    const savedTodo = await res.json();
+    setTodos([...todos, savedTodo]);
+    setTask("");
+  };
+
+  // 🔹 Delete todo
+  const deleteTodo = async (id) => {
+    await fetch(`https://todoappwithpostgressql.onrender.com/todos/${id}`, {
+      method: "DELETE",
+    });
+
+    setTodos(todos.filter((t) => t.id !== id));
+  };
+
+  return (
+    <div className="App">
+      <h1 className="title">To-Do App</h1>
+
+      <div className="todo-input-box">
+        <input
+          type="text"
+          className="todo-input"
+          placeholder="Enter a task..."
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+        />
+        <button className="add-btn" onClick={addTodo}>
+          Add
+        </button>
+      </div>
+
+      <ul className="todo-list">
+        {todos.map((todo) => (
+          <li key={todo.id} className="todo-item">
+            <span>{todo.title}</span>
+            <button
+              className="delete-btn"
+              onClick={() => deleteTodo(todo.id)}
+            >
+              ✕
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
