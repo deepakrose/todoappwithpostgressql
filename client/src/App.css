@@ -51,7 +51,6 @@
 }
 
 .todo-item {
-  background: white;
   color: black;   /* 🔥 Fix added */
   padding: 14px;
   margin-bottom: 10px;
